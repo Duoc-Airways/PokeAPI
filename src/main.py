@@ -18,6 +18,10 @@ async def get_pokemon(request: Request, pokemon_name: str):
 
     return templates.TemplateResponse('home.html', {"request": request, "name": name, "types": types, "sprites": sprites})
 
+@app.get('/home')
+def home_page(request: Request):
+    return templates.TemplateResponse('search.html', {"request": request})
+
 def get_pokemon_info(pokemon_name):
     url = f"https://pokeapi.co/api/v2/pokemon/{pokemon_name.lower()}"
     response = requests.get(url)
