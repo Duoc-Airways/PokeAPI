@@ -9,14 +9,18 @@ templates = Jinja2Templates(directory='html')
 @app.get('/home/{pokemon_name}')
 async def get_pokemon(request: Request, pokemon_name: str):
     result = get_pokemon_info(pokemon_name)
+    if result is None:
+        return templates.TemplateResponse('search.html', {"request": request})
+        
     name = result["name"]
-    heigth = result["height"]
+    height = result["height"]
     weight = result["weight"]
     abilities = result["abilities"]
     types = result["types"]
     sprites = result["sprites"]
 
-    return templates.TemplateResponse('home.html', {"request": request, "name": name, "types": types, "sprites": sprites})
+    return templates.TemplateResponse('home.html', {"request": request, "name": name, "types": types, "abilities": abilities, "height": height, "weight": weight, "sprites": sprites})
+        
 
 @app.get('/home')
 def home_page(request: Request):
