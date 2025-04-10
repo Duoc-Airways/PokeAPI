@@ -1,12 +1,30 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, Request
+from fastapi.templating import Jinja2Templates
 import requests
 
 app = FastAPI()
 
-@app.get('/')
-async def get_pokemon(pokemon_name: str):
+templates = Jinja2Templates(directory='html')
+
+@app.get('/home/{pokemon_name}')
+async def get_pokemon(request: Request, pokemon_name: str):
     result = get_pokemon_info(pokemon_name)
-    return {"message": result}
+    if result is None:
+        return templates.TemplateResponse('search.html', {"request": request})
+        
+    name = result["name"]
+    height = result["height"]
+    weight = result["weight"]
+    abilities = result["abilities"]
+    types = result["types"]
+    sprites = result["sprites"]
+
+    return templates.TemplateResponse('home.html', {"request": request, "name": name, "types": types, "abilities": abilities, "height": height, "weight": weight, "sprites": sprites})
+        
+
+@app.get('/home')
+def home_page(request: Request):
+    return templates.TemplateResponse('search.html', {"request": request})
 
 def get_pokemon_info(pokemon_name):
     url = f"https://pokeapi.co/api/v2/pokemon/{pokemon_name.lower()}"
@@ -19,7 +37,8 @@ def get_pokemon_info(pokemon_name):
             "height": pokemon_data["height"],
             "weight": pokemon_data["weight"],
             "abilities": [ability["ability"]["name"] for ability in pokemon_data["abilities"]],
-            "types": [type_data["type"]["name"] for type_data in pokemon_data["types"]]
+            "types": [type_data["type"]["name"] for type_data in pokemon_data["types"]],
+            "sprites": pokemon_data["sprites"]["front_default"]
         }
         return pokemon_info
     else:
