@@ -1,0 +1,3 @@
+#!/bin/bash
+echo "✨ Pre-push: Ready to push! Good luck! ✨"
+exit 0
