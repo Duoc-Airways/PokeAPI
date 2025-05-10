@@ -8,6 +8,6 @@ body {
 }
 
 input::placeholder {
-  color: #999;
+  color: #9999;
   font-style: italic;
 }
