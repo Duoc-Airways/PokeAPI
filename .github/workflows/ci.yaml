@@ -105,7 +105,7 @@ jobs:
     - name: 🔍 Scan for secrets with Gitleaks
       uses: gitleaks/gitleaks-action@v2
       with:
-      config-path: .github/gitleaks.toml
+        config-path: .github/gitleaks.toml
       continue-on-error: true
 
 
