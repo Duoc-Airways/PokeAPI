@@ -76,9 +76,13 @@ jobs:
       run: PYTHONPATH=. pytest --cov=app --cov-fail-under=80 tests/
       continue-on-error: true
 
-    - name: 📊 Upload coverage report (text summary)
+    - name: 🧐 Check for .coverage file and list files
+      run: ls -al
+      continue-on-error: true
+
+    - name: 📊 Generate coverage report (text summary)
       run: coverage report
-      continue-on-error: true 
+      continue-on-error: true
 
  check-secrets:
 
