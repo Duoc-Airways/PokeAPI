@@ -2,46 +2,33 @@
 layout: default
 ---
 
-Text can be **bold**, _italic_, or ~~strikethrough~~.
+# Proyecto PokeAPI
 
-[Link to another page](./another-page.html).
+Bienvenido al sitio oficial de la documentación y presentación del proyecto **PokeAPI** desarrollado en Duoc UC.
 
-There should be whitespace between paragraphs.
+## ¿Qué es PokeAPI?
 
-There should be whitespace between paragraphs. We recommend including a README, or a file with information about your project.
+PokeAPI es una API educativa que simula la consulta y gestión de datos relacionados a Pokémon, permitiendo practicar desarrollo frontend y backend.
 
-# Header 1
+## Integrantes del equipo
 
-This is a normal paragraph following a header. GitHub is a code hosting platform for version control and collaboration. It lets you and others work together on projects from anywhere.
+- Vicente Pérez
+- Juan Daniel Miqueas Gacitúa Villablanca
+- Jordán Osorio
 
-## Header 2
+## Tecnologías usadas
 
-> This is a blockquote following a header.
->
-> When something is important enough, you do it even if the odds are not in your favor.
+- Node.js (API)
+- React (Frontend)
+- GitHub Pages (Documentación)
 
-### Header 3
+## Objetivo del Proyecto
 
-```js
-// Javascript code with syntax highlighting.
-var fun = function lang(l) {
-  dateformat.i18n = require('./lang/' + l)
-  return true;
-}
-```
+Desarrollar un sistema donde los usuarios puedan consultar, filtrar y visualizar información sobre Pokémon y su evolución, utilizando una API REST creada desde cero.
 
-```ruby
-# Ruby code with syntax highlighting
-GitHubPages::Dependencies.gems.each do |gem, version|
-  s.add_dependency(gem, "= #{version}")
-end
-```
+## Enlace
 
-#### Header 4
-
-*   This is an unordered list following a header.
-*   This is an unordered list following a header.
-*   This is an unordered list following a header.
+- [Repositorio en GitHub](https://github.com/Duoc-Airways/PokeAPI)
 
 ##### Header 5
 
@@ -52,7 +39,7 @@ end
 ###### Header 6
 
 | head1        | head two          | three |
-|:-------------|:------------------|:------|
+| :----------- | :---------------- | :---- |
 | ok           | good swedish fish | nice  |
 | out of stock | good and plenty   | nice  |
 | ok           | good `oreos`      | hmm   |
@@ -60,14 +47,14 @@ end
 
 ### There's a horizontal rule below this.
 
-* * *
+---
 
 ### Here is an unordered list:
 
-*   Item foo
-*   Item bar
-*   Item baz
-*   Item zip
+- Item foo
+- Item bar
+- Item baz
+- Item zip
 
 ### And an ordered list:
 
@@ -99,7 +86,6 @@ end
 ### Large image
 
 ![Branching](https://guides.github.com/activities/hello-world/branching.png)
-
 
 ### Definition lists can be used with HTML syntax.
 
