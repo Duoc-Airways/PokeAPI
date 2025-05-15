@@ -1,0 +1,6 @@
+title: Minimal theme Airways
+logo: /assets/img/avionLogo.jpeg
+description: Proyecto de documentación Duoc Airways
+show_downloads: true
+google_analytics:
+theme: jekyll-theme-minimal
