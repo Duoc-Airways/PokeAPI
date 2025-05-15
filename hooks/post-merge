@@ -1,0 +1,3 @@
+#!/bin/bash
+echo "✅ Post-merge: Pull and merge successful! Great job!"
+exit 0

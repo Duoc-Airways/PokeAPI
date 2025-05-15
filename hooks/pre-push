@@ -1,0 +1,33 @@
+#!/bin/bash
+
+echo "🔥 Running pre-push hook..."
+
+allowed_prefixes="^feat_|^fix_|^chore_|^docs_|^style_|^refactor_|^test_"
+
+while read local_ref local_sha remote_ref remote_sha
+do
+    echo "🔍 Checking commits from $remote_sha to $local_sha"
+
+    # Handle new branches
+    if [ "$remote_sha" = "0000000000000000000000000000000000000000" ]; then
+        commit_range="$local_sha"
+    else
+        commit_range="$remote_sha..$local_sha"
+    fi
+
+    for commit in $(git rev-list "$commit_range"); do
+        message=$(git log --format=%s -n 1 "$commit")
+        echo "🔸 Commit $commit: $message"
+
+        if ! echo "$message" | grep -qE "$allowed_prefixes"; then
+            echo "❌ Commit $commit has invalid message:"
+            echo "   ➤ \"$message\""
+            echo "   Allowed prefixes: feat_, fix_, chore_, docs_, style_, refactor_, test_"
+            echo "⛔ Push blocked due to invalid commit message format."
+            exit 1
+        fi
+    done
+done
+
+echo "✅ All commit messages are valid!"
+exit 0
