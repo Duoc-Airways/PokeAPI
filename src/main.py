@@ -92,3 +92,4 @@ async def get_pokemon(request: Request, pokemon_name: str):
             "sprites": sprites
         }
     )
+    
