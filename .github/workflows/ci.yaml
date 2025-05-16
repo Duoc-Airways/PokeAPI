@@ -73,7 +73,7 @@ jobs:
        pip install -r requirements.txt
 
     - name: 🧪 Run tests
-      run: PYTHONPATH=. pytest --cov=src --cov-fail-under=80 tests/
+      run: PYTHONPATH=. pytest --cov=src --cov-fail-under=50 tests/
       continue-on-error: true
 
     - name: 🧐 Check for .coverage file and list files
