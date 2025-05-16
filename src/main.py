@@ -1,42 +1,23 @@
+"""Main FastAPI app for Pokédex search and display."""
+
 from fastapi import FastAPI, Request
+from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 import requests
-from fastapi.staticfiles import StaticFiles
 
-app = FastAPI() 
-  
+app = FastAPI()
 
 app.mount("/static", StaticFiles(directory="static"), name="static")
 
 templates = Jinja2Templates(directory='FrontEnd')
 
-@app.get('/{pokemon_name}')
-async def get_pokemon(request: Request, pokemon_name: str):
-    result = get_pokemon_info(pokemon_name)
-    if result is None:
-        return templates.TemplateResponse('home/home.html', {"request": request})
-        
-    name = result["name"]
-    height = result["height"]
-    weight = result["weight"]
-    abilities = result["abilities"]
-    types = result["types"]
-    sprites = result["sprites"]
-
-    return templates.TemplateResponse('pokemon/pokemon.html', {"request": request, "name": name, "types": types, "abilities": abilities, "height": height, "weight": weight, "sprites": sprites})
-        
-
-@app.get('/')
-def home_page(request: Request):
-    return templates.TemplateResponse('home/home.html', {"request": request})
 
 def get_pokemon_info(pokemon_name):
+    """Fetch Pokémon info from the PokeAPI."""
     url = f"https://pokeapi.co/api/v2/pokemon/{pokemon_name.lower()}"
-    response = requests.get(url)
-    
+    response = requests.get(url, timeout=5)
     if response.status_code == 200:
         pokemon_data = response.json()
-
         type_styles = {
             "normal": {"color": "#A8A77A", "emoji": "⚪"},
             "fire": {"color": "#EE8130", "emoji": "🔥"},
@@ -57,14 +38,14 @@ def get_pokemon_info(pokemon_name):
             "steel": {"color": "#B7B7CE", "emoji": "⚙️"},
             "fairy": {"color": "#D685AD", "emoji": "🧚"}
         }
-
-
-        types = [{
-            "name": type_data["type"]["name"],
-            "color": type_styles[type_data["type"]["name"]]["color"],
-            "emoji": type_styles[type_data["type"]["name"]]["emoji"]
-        } for type_data in pokemon_data["types"]]
-        
+        types = [
+            {
+                "name": type_data["type"]["name"],
+                "color": type_styles[type_data["type"]["name"]]["color"],
+                "emoji": type_styles[type_data["type"]["name"]]["emoji"]
+            }
+            for type_data in pokemon_data["types"]
+        ]
         pokemon_info = {
             "name": pokemon_data["name"],
             "height": pokemon_data["height"],
@@ -73,8 +54,37 @@ def get_pokemon_info(pokemon_name):
             "types": types,
             "sprites": pokemon_data["sprites"]["front_default"]
         }
-
-            
         return pokemon_info
-    else:
-        return None
+    return None
+
+
+@app.get('/')
+def home_page(request: Request):
+    """Render the home page template."""
+    return templates.TemplateResponse('home/home.html', {"request": request})
+
+
+@app.get('/{pokemon_name}')
+async def get_pokemon(request: Request, pokemon_name: str):
+    """Render the Pokémon page or home if not found."""
+    result = get_pokemon_info(pokemon_name)
+    if result is None:
+        return templates.TemplateResponse('home/home.html', {"request": request})
+    name = result["name"]
+    height = result["height"]
+    weight = result["weight"]
+    abilities = result["abilities"]
+    types = result["types"]
+    sprites = result["sprites"]
+    return templates.TemplateResponse(
+        'pokemon/pokemon.html',
+        {
+            "request": request,
+            "name": name,
+            "types": types,
+            "abilities": abilities,
+            "height": height,
+            "weight": weight,
+            "sprites": sprites
+        }
+    )
