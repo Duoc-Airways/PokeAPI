@@ -3,6 +3,7 @@
 from fastapi import FastAPI, Request
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
+
 import requests
 
 app = FastAPI()
@@ -50,7 +51,10 @@ def get_pokemon_info(pokemon_name):
             "name": pokemon_data["name"],
             "height": pokemon_data["height"],
             "weight": pokemon_data["weight"],
-            "abilities": [ability["ability"]["name"] for ability in pokemon_data["abilities"]],
+            "abilities": [
+                ability["ability"]["name"]
+                for ability in pokemon_data["abilities"]
+            ],
             "types": types,
             "sprites": pokemon_data["sprites"]["front_default"]
         }
