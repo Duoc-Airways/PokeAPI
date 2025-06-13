@@ -2,6 +2,9 @@ from fastapi import FastAPI, Request
 from fastapi.templating import Jinja2Templates
 import requests
 from fastapi.staticfiles import StaticFiles
+from starlette.exceptions import HTTPException as StarletteHTTPException
+from fastapi.exception_handlers import http_exception_handler
+from fastapi import HTTPException
 
 app = FastAPI() 
   
@@ -14,7 +17,7 @@ templates = Jinja2Templates(directory='FrontEnd')
 async def get_pokemon(request: Request, pokemon_name: str):
     result = get_pokemon_info(pokemon_name)
     if result is None:
-        return templates.TemplateResponse('home/home.html', {"request": request})
+        raise HTTPException(status_code=404, detail="Pokémon not found")
         
     name = result["name"]
     height = result["height"]
@@ -78,3 +81,9 @@ def get_pokemon_info(pokemon_name):
         return pokemon_info
     else:
         return None
+
+@app.exception_handler(StarletteHTTPException)
+async def custom_http_exception_handler(request: Request, exc: StarletteHTTPException):
+    if exc.status_code == 404:
+        return templates.TemplateResponse("errors/404.html", {"request": request}, status_code=404)
+    return await http_exception_handler(request, exc)
