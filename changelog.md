@@ -1,5 +1,7 @@
 ---
 title: Changelog
+layout: default
+permalink: /changelog/
 ---
 
 # 📜 Changelog - PokeAPI

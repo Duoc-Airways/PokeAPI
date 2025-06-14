@@ -1,5 +1,7 @@
 ---
 title: Documentación API
+layout: default
+permalink: /api/
 ---
 
 # 📚 Documentación de la API - PokeAPI

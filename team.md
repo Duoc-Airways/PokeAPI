@@ -1,5 +1,7 @@
 ---
 title: Duoc Airways Team
+layout: default
+permalink: /team/
 ---
 
 # 👥 Equipo de Desarrollo - Proyecto PokeAPI

@@ -1,5 +1,7 @@
 ---
 title: Tecnologías
+layout: default
+permalink: /tech/
 ---
 
 # 🛠️ Tecnologías Utilizadas en PokeAPI
