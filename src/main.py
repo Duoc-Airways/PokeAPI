@@ -1,16 +1,40 @@
 """Main FastAPI app for Pokédex search and display."""
 
 from fastapi import FastAPI, Request
-from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 
 import requests
+from fastapi.staticfiles import StaticFiles
+from starlette.exceptions import HTTPException as StarletteHTTPException
+from fastapi.exception_handlers import http_exception_handler
+from fastapi import HTTPException
+
 
 app = FastAPI()
 
 app.mount("/static", StaticFiles(directory="static"), name="static")
 
 templates = Jinja2Templates(directory='FrontEnd')
+
+@app.get('/{pokemon_name}')
+async def get_pokemon(request: Request, pokemon_name: str):
+    result = get_pokemon_info(pokemon_name)
+    if result is None:
+        raise HTTPException(status_code=404, detail="Pokémon not found")
+        
+    name = result["name"]
+    height = result["height"]
+    weight = result["weight"]
+    abilities = result["abilities"]
+    types = result["types"]
+    sprites = result["sprites"]
+
+    return templates.TemplateResponse('pokemon/pokemon.html', {"request": request, "name": name, "types": types, "abilities": abilities, "height": height, "weight": weight, "sprites": sprites})
+        
+
+@app.get('/')
+def home_page(request: Request):
+    return templates.TemplateResponse('home/home.html', {"request": request})
 
 
 def get_pokemon_info(pokemon_name):
@@ -59,37 +83,11 @@ def get_pokemon_info(pokemon_name):
             "sprites": pokemon_data["sprites"]["front_default"]
         }
         return pokemon_info
-    return None
+    else:
+        return None
 
-
-@app.get('/')
-def home_page(request: Request):
-    """Render the home page template."""
-    return templates.TemplateResponse('home/home.html', {"request": request})
-
-
-@app.get('/{pokemon_name}')
-async def get_pokemon(request: Request, pokemon_name: str):
-    """Render the Pokémon page or home if not found."""
-    result = get_pokemon_info(pokemon_name)
-    if result is None:
-        return templates.TemplateResponse('home/home.html', {"request": request})
-    name = result["name"]
-    height = result["height"]
-    weight = result["weight"]
-    abilities = result["abilities"]
-    types = result["types"]
-    sprites = result["sprites"]
-    return templates.TemplateResponse(
-        'pokemon/pokemon.html',
-        {
-            "request": request,
-            "name": name,
-            "types": types,
-            "abilities": abilities,
-            "height": height,
-            "weight": weight,
-            "sprites": sprites
-        }
-    )
-    
+@app.exception_handler(StarletteHTTPException)
+async def custom_http_exception_handler(request: Request, exc: StarletteHTTPException):
+    if exc.status_code == 404:
+        return templates.TemplateResponse("errors/404.html", {"request": request}, status_code=404)
+    return await http_exception_handler(request, exc)
