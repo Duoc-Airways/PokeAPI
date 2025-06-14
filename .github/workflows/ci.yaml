@@ -110,7 +110,7 @@ jobs:
 
 
 
-  format-check:
+   format-check:
 
    runs-on: ubuntu-latest
    
