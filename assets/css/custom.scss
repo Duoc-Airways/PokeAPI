@@ -1,0 +1,24 @@
+// Al final de assets/css/style.scss
+
+// Custom styles by Juan
+.site-nav {
+    background-color: #004080;
+    padding: 0.5rem;
+    text-align: center;
+}
+
+.site-nav a {
+    color: #fff;
+    margin: 0 15px;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.site-nav a:hover {
+    text-decoration: underline;
+}
+
+.site-logo {
+    height: 50px;
+    margin-top: 10px;
+}
