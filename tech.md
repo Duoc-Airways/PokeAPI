@@ -12,17 +12,19 @@ En esta sección encontrarás las principales tecnologías, frameworks y herrami
 
 ## 🌐 Backend
 
-- **Node.js** → Motor de ejecución de JavaScript en el servidor.
-- **Express.js** → Framework minimalista para la creación de la API REST.
+- **Python 3.x** → Lenguaje de programación utilizado para la API.
+- **FastAPI** → Framework moderno y rápido para la creación de APIs REST.
+- **Jinja2** → Motor de plantillas para renderizar HTML dinámico desde el servidor.
+- **Requests** → Librería utilizada para consumir la PokeAPI oficial y obtener los datos de los Pokémon.
 - **Docker** → Contenerización del entorno de la API para facilitar el despliegue y la portabilidad.
 
 ---
 
 ## 🎨 Frontend
 
-- **React** → Biblioteca JavaScript para la creación de interfaces de usuario interactivas.
-- **Vite** → Herramienta de construcción ultrarrápida para proyectos modernos de frontend.
-- **Axios** → Cliente HTTP basado en Promesas, utilizado para consumir la API desde el frontend.
+- **HTML** → Estructura de las páginas del frontend, renderizadas mediante Jinja2.
+- **CSS** → Estilos personalizados para la presentación visual de las páginas.
+- **Bootstrap (opcional)** → (Si utilizaron alguna librería CSS, se puede mencionar aquí; si no, puedes quitar esta línea).
 
 ---
 
@@ -37,7 +39,7 @@ En esta sección encontrarás las principales tecnologías, frameworks y herrami
 ## 🔄 Integración Continua / Entrega Continua (CI/CD)
 
 - **GitHub Actions** → Automatización de flujos de trabajo:
-  - Ejecución de pruebas automáticas.
+  - Ejecución de pruebas automáticas (si corresponde).
   - Build del proyecto.
   - Despliegue automático de la documentación.
 

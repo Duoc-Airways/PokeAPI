@@ -15,7 +15,7 @@ Bienvenido a la sección de presentación del equipo que desarrolló el proyecto
 ### Vicente Pérez
 
 - **Rol:** Fullstack Developer
-- **Responsabilidades:** Desarrollo de la integración entre frontend y backend, estructura del proyecto, documentación.
+- **Responsabilidades:** Desarrollo de la integración entre backend y frontend, estructura general del proyecto, documentación y soporte de infraestructura.
 - **GitHub:** [github.com/VicentePerez](https://github.com/VicentePerez)
 
 ---
@@ -23,7 +23,7 @@ Bienvenido a la sección de presentación del equipo que desarrolló el proyecto
 ### Juan Daniel Miqueas Gacitúa Villablanca
 
 - **Rol:** Frontend Developer
-- **Responsabilidades:** Desarrollo de la interfaz de usuario en React, diseño UX/UI.
+- **Responsabilidades:** Desarrollo de la interfaz de usuario con HTML, CSS y plantillas Jinja2. Diseño UX/UI y personalización de la documentación en GitHub Pages.
 - **GitHub:** [github.com/JuanDanielGacitua](https://github.com/JuanDanielGacitua)
 
 ---
@@ -31,7 +31,7 @@ Bienvenido a la sección de presentación del equipo que desarrolló el proyecto
 ### Jordán Osorio
 
 - **Rol:** Backend Developer
-- **Responsabilidades:** Desarrollo de la API REST con Node.js.
+- **Responsabilidades:** Desarrollo de la API REST utilizando **FastAPI**, consumo de la PokeAPI oficial con `requests`, y gestión de la lógica del backend.
 - **GitHub:** [github.com/JordanOsorioB](https://github.com/JordanOsorioB)
 
 ---
