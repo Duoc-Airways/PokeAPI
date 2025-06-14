@@ -1,38 +1,28 @@
-import pytest
+"""Tests for main FastAPI app."""
+
 from fastapi.testclient import TestClient
-from src.main import app  # Importa directamente la instancia de la app
-from src.database import Base, engine  # Base y engine están en database.py
+
+from src.main import app
 
 client = TestClient(app)
 
-# Setup y teardown para cada test
-@pytest.fixture(scope="function", autouse=True)
-def setup_and_teardown():
-    Base.metadata.drop_all(bind=engine)
-    Base.metadata.create_all(bind=engine)
-    yield
-    Base.metadata.drop_all(bind=engine)
 
-def test_create_item():
-    response = client.post("/items/", json={"name": "Item1", "description": "Test item"})
+def test_home_page():
+    """Test home page loads successfully."""
+    response = client.get("/")
     assert response.status_code == 200
-    data = response.json()
-    assert data["name"] == "Item1"
-    assert data["description"] == "Test item"
-    assert "id" in data
+    assert "html" in response.text.lower()
 
-def test_read_items_empty():
-    response = client.get("/items/")
+
+def test_get_pokemon_found():
+    """Test getting a known Pokémon returns a page."""
+    response = client.get("/pikachu")
     assert response.status_code == 200
-    assert response.json() == []
+    assert "pikachu" in response.text.lower()
 
-def test_read_items_after_insert():
-    client.post("/items/", json={"name": "Item1", "description": "Item 1"})
-    client.post("/items/", json={"name": "Item2", "description": "Item 2"})
 
-    response = client.get("/items/")
+def test_get_pokemon_not_found():
+    """Test getting an unknown Pokémon returns home page."""
+    response = client.get("/noexistepokemon123")
     assert response.status_code == 200
-    data = response.json()
-    assert len(data) == 2
-    assert data[0]["name"] == "Item1"
-    assert data[1]["name"] == "Item2"
+    assert "html" in response.text.lower()
