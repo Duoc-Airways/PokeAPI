@@ -46,3 +46,5 @@ bandit
 pip-audit
 black==23.3.0
 setuptools>=65.5.1
+mypy
+types-requests
