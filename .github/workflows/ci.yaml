@@ -108,8 +108,6 @@ jobs:
         config-path: .github/gitleaks.toml
       continue-on-error: true
 
-
-
    format-check:
 
    runs-on: ubuntu-latest
