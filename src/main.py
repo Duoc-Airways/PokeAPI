@@ -12,16 +12,16 @@ app = FastAPI()
 
 app.mount("/static", StaticFiles(directory="static"), name="static")
 
-templates = Jinja2Templates(directory='FrontEnd')
+templates = Jinja2Templates(directory="FrontEnd")
 
 
-@app.get('/')
+@app.get("/")
 def home_page(request: Request):
     """Render the home page template."""
-    return templates.TemplateResponse('home/home.html', {"request": request})
+    return templates.TemplateResponse("home/home.html", {"request": request})
 
 
-@app.get('/{pokemon_name}')
+@app.get("/{pokemon_name}")
 async def get_pokemon(request: Request, pokemon_name: str):
     """Render the Pokémon page or return 404 if not found."""
     result = get_pokemon_info(pokemon_name)
@@ -34,7 +34,7 @@ async def get_pokemon(request: Request, pokemon_name: str):
     types = result["types"]
     sprites = result["sprites"]
     return templates.TemplateResponse(
-        'pokemon/pokemon.html',
+        "pokemon/pokemon.html",
         {
             "request": request,
             "name": name,
@@ -42,8 +42,8 @@ async def get_pokemon(request: Request, pokemon_name: str):
             "abilities": abilities,
             "height": height,
             "weight": weight,
-            "sprites": sprites
-        }
+            "sprites": sprites,
+        },
     )
 
 
@@ -71,13 +71,13 @@ def get_pokemon_info(pokemon_name):
             "dragon": {"color": "#6F35FC", "emoji": "🐉"},
             "dark": {"color": "#705746", "emoji": "🌑"},
             "steel": {"color": "#B7B7CE", "emoji": "⚙️"},
-            "fairy": {"color": "#D685AD", "emoji": "🧚"}
+            "fairy": {"color": "#D685AD", "emoji": "🧚"},
         }
         types = [
             {
                 "name": type_data["type"]["name"],
                 "color": type_styles[type_data["type"]["name"]]["color"],
-                "emoji": type_styles[type_data["type"]["name"]]["emoji"]
+                "emoji": type_styles[type_data["type"]["name"]]["emoji"],
             }
             for type_data in pokemon_data["types"]
         ]
@@ -86,20 +86,17 @@ def get_pokemon_info(pokemon_name):
             "height": pokemon_data["height"],
             "weight": pokemon_data["weight"],
             "abilities": [
-                ability["ability"]["name"]
-                for ability in pokemon_data["abilities"]
+                ability["ability"]["name"] for ability in pokemon_data["abilities"]
             ],
             "types": types,
-            "sprites": pokemon_data["sprites"]["front_default"]
+            "sprites": pokemon_data["sprites"]["front_default"],
         }
         return pokemon_info
     return None
 
 
 @app.exception_handler(StarletteHTTPException)
-async def custom_http_exception_handler(
-    request: Request, exc: StarletteHTTPException
-):
+async def custom_http_exception_handler(request: Request, exc: StarletteHTTPException):
     """Handle HTTP exceptions with custom 404 page."""
     if exc.status_code == 404:
         return templates.TemplateResponse(
