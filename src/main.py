@@ -1,12 +1,11 @@
 """Main FastAPI app for Pokédex search and display."""
 
+import requests
 from fastapi import FastAPI, HTTPException, Request
 from fastapi.exception_handlers import http_exception_handler
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 from starlette.exceptions import HTTPException as StarletteHTTPException
-
-import requests
 
 app = FastAPI()
 
@@ -86,7 +85,8 @@ def get_pokemon_info(pokemon_name):
             "height": pokemon_data["height"],
             "weight": pokemon_data["weight"],
             "abilities": [
-                ability["ability"]["name"] for ability in pokemon_data["abilities"]
+                ability["ability"]["name"]
+                for ability in pokemon_data["abilities"]
             ],
             "types": types,
             "sprites": pokemon_data["sprites"]["front_default"],
@@ -96,7 +96,9 @@ def get_pokemon_info(pokemon_name):
 
 
 @app.exception_handler(StarletteHTTPException)
-async def custom_http_exception_handler(request: Request, exc: StarletteHTTPException):
+async def custom_http_exception_handler(
+    request: Request, exc: StarletteHTTPException
+):
     """Handle HTTP exceptions with custom 404 page."""
     if exc.status_code == 404:
         return templates.TemplateResponse(
