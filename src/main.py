@@ -85,8 +85,7 @@ def get_pokemon_info(pokemon_name):
             "height": pokemon_data["height"],
             "weight": pokemon_data["weight"],
             "abilities": [
-                ability["ability"]["name"]
-                for ability in pokemon_data["abilities"]
+                ability["ability"]["name"] for ability in pokemon_data["abilities"]
             ],
             "types": types,
             "sprites": pokemon_data["sprites"]["front_default"],
@@ -96,9 +95,7 @@ def get_pokemon_info(pokemon_name):
 
 
 @app.exception_handler(StarletteHTTPException)
-async def custom_http_exception_handler(
-    request: Request, exc: StarletteHTTPException
-):
+async def custom_http_exception_handler(request: Request, exc: StarletteHTTPException):
     """Handle HTTP exceptions with custom 404 page."""
     if exc.status_code == 404:
         return templates.TemplateResponse(
